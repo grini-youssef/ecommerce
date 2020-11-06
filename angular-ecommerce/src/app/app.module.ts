@@ -11,7 +11,9 @@ import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
-import { CartDetailsComponent } from './components/cart-details/cart-details.component'
+import { CartDetailsComponent } from './components/cart-details/cart-details.component';
+import { CheckoutComponent } from './components/checkout/checkout.component'
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
@@ -21,6 +23,7 @@ const routes: Routes = [
   { path: 'search/:keyword' , component: ProductListComponent },
   { path: 'products/:id' , component: ProductDetailsComponent },
   { path: 'cart-details' , component: CartDetailsComponent },
+  { path: 'checkout' , component: CheckoutComponent },
 
   { path: '' , redirectTo : '/product', pathMatch: 'full' },
   { path: '**' , redirectTo: '/product', pathMatch: 'full' }
@@ -34,13 +37,15 @@ const routes: Routes = [
     SearchComponent,
     ProductDetailsComponent,
     CartStatusComponent,
-    CartDetailsComponent
+    CartDetailsComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]
