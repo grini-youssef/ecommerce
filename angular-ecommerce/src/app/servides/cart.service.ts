@@ -76,4 +76,24 @@ export class CartService {
 
   }
 
+  decrementQuantity(theCartItem: CartItem){
+    theCartItem.quantity--;
+    this.computeCartToatals();
+  }
+
+  remove(theCartItem: CartItem) {
+   
+    // get index of item in the array
+    const itemIndex = this.cartItems.findIndex (tempCartItem => tempCartItem.id == theCartItem.id);
+
+    // if found, remove the item from the array at the given index
+    if(itemIndex > -1){
+      this.cartItems.splice(itemIndex, 1);
+
+      this.computeCartToatals();
+    }
+
+  }
+
+
 }
