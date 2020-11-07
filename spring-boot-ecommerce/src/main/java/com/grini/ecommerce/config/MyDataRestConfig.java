@@ -13,8 +13,10 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.http.HttpMethod;
 
+import com.grini.ecommerce.entity.Country;
 import com.grini.ecommerce.entity.Product;
 import com.grini.ecommerce.entity.ProductCategory;
+import com.grini.ecommerce.entity.State;
 
 @Configuration
 public class MyDataRestConfig implements RepositoryRestConfigurer {
@@ -32,23 +34,24 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 		
 		HttpMethod[] theUnsportedAction = {HttpMethod.DELETE, HttpMethod.POST, HttpMethod.PUT};
 		
-		// disable http method for product : PUT , POST , DELETE
+		// disable http method for Class : PUT , POST , DELETE
 		
-		config.getExposureConfiguration()
-		.forDomainType(Product.class)
-		.withItemExposure((metdata, HttpMethod) -> HttpMethod.disable(theUnsportedAction))
-		.withCollectionExposure((metdata, HttpMethod) -> HttpMethod.disable(theUnsportedAction));
-		
-		// disable http method for productCategory : PUT , POST , DELETE
+		disableHttpMethods(Product.class ,config, theUnsportedAction);
+		disableHttpMethods(ProductCategory.class ,config, theUnsportedAction);
+		disableHttpMethods(Country.class ,config, theUnsportedAction);
+		disableHttpMethods(State.class ,config, theUnsportedAction);
 					
-		config.getExposureConfiguration()
-		.forDomainType(ProductCategory.class)
-		.withItemExposure((metdata, HttpMethod) -> HttpMethod.disable(theUnsportedAction))
-		.withCollectionExposure((metdata, HttpMethod) -> HttpMethod.disable(theUnsportedAction));	
 		
 		// call an internal helper method
 		exposeIds(config);
 		
+	}
+
+	private void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] theUnsportedAction) {
+		config.getExposureConfiguration()
+		.forDomainType(theClass)
+		.withItemExposure((metdata, HttpMethod) -> HttpMethod.disable(theUnsportedAction))
+		.withCollectionExposure((metdata, HttpMethod) -> HttpMethod.disable(theUnsportedAction));
 	}
 
 	private void exposeIds(RepositoryRestConfiguration config) {
